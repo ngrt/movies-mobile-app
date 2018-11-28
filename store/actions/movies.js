@@ -9,10 +9,11 @@ export const fetchMoviesStart = () => {
   }
 };
 
-export const fetchMoviesSuccess = (moviesArray) => {
+export const fetchMoviesSuccess = (moviesArray, maxPage) => {
     return {
         type: actionTypes.FETCH_MOVIES_SUCCESS,
-        movies: moviesArray
+        movies: moviesArray,
+        maxPage: maxPage
     }
 };
 
@@ -23,17 +24,28 @@ export const fetchMoviesFail = (error) => {
   }
 };
 
-export const fetchMovies = (name) => {
+export const fetchMovies = (name, page) => {
+    console.log("Search for " + name + " and page : " + page);
     return dispatch => {
         dispatch(fetchMoviesStart());
-        axios.get(URL_SEARCH_MOVIES, {params: {query: name}})
+        axios.get(URL_SEARCH_MOVIES, {params: {query: name, page: page}})
             .then(response => {
-                console.log(response);
-                dispatch(fetchMoviesSuccess(reponse.data.movies))
+                dispatch(fetchMoviesSuccess(response.data.results, response.data.total_pages))
             })
             .catch(error => {
-                console.log(error);
                 dispatch(fetchMoviesFail(error));
             });
+    }
+};
+
+export const clearMoviesStart = () => {
+    return {
+        type: actionTypes.CLEAR_MOVIES
+    }
+};
+
+export const clearMovies = () => {
+    return dispatch => {
+        dispatch(clearMoviesStart())
     }
 };
