@@ -48,7 +48,7 @@ class MovieDetails extends Component {
                         style={styles.stars}
                         imageSize={15}
                         readonly
-                        startingValue={this.props.navigation.state.params.vote_average / 2}
+                        startingValue={this.state.movie.vote_average/2}
                     />
                     <Text style={styles.description}>{this.state.movie.overview}</Text>
                 </View>);

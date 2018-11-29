@@ -25,7 +25,6 @@ export const fetchMoviesFail = (error) => {
 };
 
 export const fetchMovies = (name, page) => {
-    console.log("Search for " + name + " and page : " + page);
     return dispatch => {
         dispatch(fetchMoviesStart());
         axios.get(URL_SEARCH_MOVIES, {params: {query: name, page: page}})
